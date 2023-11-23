@@ -5,5 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
   </head>
-  <body></body>
+  <body>
+    <div class="todo">
+      <div class="container">
+        <header class="todo__header">
+          <div class="overflow">
+            <h1><span id="todaysDay">Monday</span> Todo's</h1>
+            <span id="todaysDate">August 1, 2020</span>
+          </div>
+        </header>
+        <from id="form">
+          <div class="todo__input wrap">
+            <input type="text" id="todoInput" placeholder="Enter todo for the day" />
+            <div class="todo__btn">
+              <button role="button">Add</button>
+            </div>
+          </div>
+        </from>
+        <ul class="todo_list wrap">
+          <li data-id="1" class="">
+            <div class="list">
+              <input type="text" class="text" value="A new task" readonly />
+            </div>
+            <div class="options">
+              <span id="check"><i class="fa fa-check"></i></span>
+              <span id="edit"><i class="fa fa-edit"></i></span>
+              <span id="trash"><i class="fa fa-trash"></i></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
 </html>
