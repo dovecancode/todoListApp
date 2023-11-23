@@ -16,6 +16,36 @@ ul {
   padding: 0;
 }
 
+.todo {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.todo .clear {
+  cursor: pointer;
+  display: none;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin-top: 1.6rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #655e75;
+  border-color: #6c757d;
+  border: none;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.todo .show {
+  display: block;
+}
+
 .container {
   background: #fff;
   width: 100%;
@@ -26,15 +56,6 @@ ul {
 .wrap {
   width: 80%;
   margin: auto;
-}
-
-.todo {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 /* header */
@@ -63,6 +84,157 @@ ul {
   animation: slideInDate 0.4s 0.1s both;
 }
 
+.alert {
+  padding: 0.5rem;
+  display: block;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  width: 100%;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+/* todo__input */
+.todo__input {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 10px #777;
+  background: #fff;
+  transform: translateY(-40%);
+  display: flex;
+  align-items: center;
+}
+
+.todo__input input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+input[type='text'],
+.todo__input input::placeholder {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.todo__input .todo__btn {
+  position: absolute;
+  right: 1.6rem;
+}
+
+.todo__btn button {
+  border: none;
+  background-color: cadetblue;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 0.5rem;
+}
+
+/* Todo list items */
+.todo__list li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #655e75;
+  color: #fff;
+  margin: 10px 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+}
+
+.todo__list .empty_message {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.todo__list .list {
+  margin-right: auto;
+  width: 100%;
+}
+
+.todo__list .list .text {
+  background-color: rgba(101, 94, 117, 0);
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 1rem;
+  width: 100%;
+}
+
+.todo__list .edit_text {
+  width: 100%;
+}
+
+.todo__list .edit_text input {
+  background-color: #ffffff;
+  border: none;
+  padding: 0.25rem 0.25rem;
+  margin: 0 auto;
+  display: block;
+}
+
+.todo__list .options {
+  margin-right: -115px;
+  transition: margin-right 0.3s ease;
+  display: flex;
+}
+
+.todo__list .none {
+  display: none;
+}
+
+.todo__list .checked {
+  background-color: rgba(101, 94, 117, 0.28);
+}
+
+.todo__list li:hover .options {
+  margin-right: 0;
+}
+
+.todo__list .options span {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  margin: -3px;
+  background-color: #000;
+  transition: background-color 0.3s;
+}
+
+/* icon options colors */
+.todo__list .options span:hover:nth-child(1) {
+  background-color: aquamarine;
+}
+
+.todo__list .options span:hover:nth-child(2) {
+  background-color: coral;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.todo__list .options span:hover:nth-child(3) {
+  background-color: crimson;
+}
+
+/* todo animations */
+
 @keyframes slideInDate {
   0% {
     transform: translateX(-249px);
@@ -70,5 +242,173 @@ ul {
 
   100% {
     transform: translateX(0);
+  }
+}
+
+.bounceIn {
+  -webkit-animation-name: bounceIn;
+  animation-name: bounceIn;
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes bounceIn {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes bounceIn {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.bounceOutDown {
+  -webkit-animation-name: bounceOutDown;
+  animation-name: bounceOutDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes bounceOutDown {
+  20% {
+    -webkit-transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 10px, 0);
+  }
+  40%,
+  45% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 2000px, 0);
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+@keyframes bounceOutDown {
+  20% {
+    -webkit-transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 10px, 0);
+  }
+  40%,
+  45% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 2000px, 0);
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+.rotateOutDownLeft {
+  -webkit-animation-name: rotateOutDownLeft;
+  animation-name: rotateOutDownLeft;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes rotateOutDownLeft {
+  0% {
+    -webkit-transform-origin: left bottom;
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform-origin: left bottom;
+    transform-origin: left bottom;
+    -webkit-transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+}
+@keyframes rotateOutDownLeft {
+  0% {
+    -webkit-transform-origin: left bottom;
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform-origin: left bottom;
+    transform-origin: left bottom;
+    -webkit-transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
   }
 }
