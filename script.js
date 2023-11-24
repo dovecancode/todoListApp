@@ -9,12 +9,14 @@ let todaysDate = document.getElementById('todaysDate')
 
 const fragment = document.createDocumentFragment()
 
-let todos = [
-  { id: 1, item: 'php', status: false },
-  { id: 2, item: 'javascript', status: false },
-]
+let todos = storeTodoInLocalStorage()
+
 eventListener()
 function eventListener() {
+  // render data from localstorage
+  document.addEventListener('DOMContentLoaded', renderTodoFromStorage)
+
+  // todo form submit
   todoForm.addEventListener('submit', submitTodos)
 }
 
@@ -32,20 +34,23 @@ function submitTodos(e) {
       status: false,
     }
     todos.push(todo)
-    uiRenderTodos()
+
+    uiRenderMessage('Todo added', 'alert alert-success')
+
+    localStorage.setItem('todos', JSON.stringify(todos))
+    uiRenderTodos(todo)
   }
 
   this.reset()
 }
 
-uiRenderTodos()
-function uiRenderTodos() {
+function uiRenderTodos(todo) {
   const htmlTagLi = document.createElement('li')
 
   htmlTagLi.classList.add('bounceIn')
 
-  todos.forEach((todo) => {
-    htmlTagLi.innerHTML = `<div class="list">
+  htmlTagLi.innerHTML = `
+  <div class="list">
     <form>
       <input type="text" class="text" value="${todo.item}" readonly />
     </form>
@@ -55,7 +60,6 @@ function uiRenderTodos() {
     <span id="edit" title="Edit"><i class="fa fa-edit"></i></span>
     <span id="trash" title="Delete"><i class="fa fa-trash"></i></span>
   </div>`
-  })
 
   fragment.appendChild(htmlTagLi)
   todoList.appendChild(fragment)
@@ -71,4 +75,24 @@ function uiRenderMessage(msg, className) {
   setTimeout(() => {
     spanEl.remove()
   }, 1000)
+}
+
+// localStorage
+function storeTodoInLocalStorage() {
+  let todos
+  if (localStorage.getItem('todos') === null) {
+    todos = []
+  } else {
+    todos = JSON.parse(localStorage.getItem('todos'))
+  }
+
+  return todos
+}
+
+function renderTodoFromStorage() {
+  if (todos.length === 0) {
+    todoList.innerHTML = '<p class="empty_message">Todos will go here</p>'
+  } else {
+    todos.map((todo) => uiRenderTodos(todo))
+  }
 }

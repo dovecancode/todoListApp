@@ -158,6 +158,7 @@ input[type='text'],
 .todo__list .empty_message {
   font-size: 2rem;
   margin: 0;
+  text-align: center;
 }
 
 .todo__list .list {
