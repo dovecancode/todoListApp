@@ -56,17 +56,31 @@ function uiRenderTodos(todo) {
   htmlTagLi.setAttribute('data-id', todo.id)
   htmlTagLi.classList.add('bounceIn')
 
-  htmlTagLi.innerHTML = `
-  <div class="list">
-    <form>
-      <input type="text" class="text" value="${todo.item}" readonly />
-    </form>
-  </div>
-  <div class="options">
-    <span id="check" title="Done"><i class="fa fa-check"></i></span>
-    <span id="edit" title="Edit"><i class="fa fa-edit"></i></span>
-    <span id="trash" title="Delete"><i class="fa fa-trash"></i></span>
-  </div>`
+  if (todo.status) {
+    htmlTagLi.classList = 'checked'
+    htmlTagLi.innerHTML = `
+    <div class="list">
+      <form>
+        <input type="text" class="text" value="${todo.item}" readonly />
+      </form>
+    </div>
+    <div class="options">
+      <span id="undo" title="Undo"><i class="fas fa-undo"></i></span>
+      <span id="trash" title="Delete"><i class="fa fa-trash"></i></span>
+    </div>`
+  } else {
+    htmlTagLi.innerHTML = `
+    <div class="list">
+      <form>
+        <input type="text" class="text" value="${todo.item}" readonly />
+      </form>
+    </div>
+    <div class="options">
+      <span id="check" title="Done"><i class="fa fa-check"></i></span>
+      <span id="edit" title="Edit"><i class="fa fa-edit"></i></span>
+      <span id="trash" title="Delete"><i class="fa fa-trash"></i></span>
+    </div>`
+  }
 
   fragment.appendChild(htmlTagLi)
   todoList.appendChild(fragment)
@@ -89,6 +103,41 @@ function listOptions(event) {
   deleteTodo(event)
   // edit event
   initEdit(event)
+  // todoStatus
+  todoStatus(event)
+}
+
+function todoStatus(event) {
+  const doneBtn = event.target.closest('#check')
+  const undoBtn = event.target.closest('#undo')
+
+  if (!doneBtn && !undoBtn) return
+  const htmlTagLi = event.target.closest('li')
+  const id = htmlTagLi.dataset.id
+
+  const index = todos.findIndex((todo) => todo.id === id)
+
+  todos[index].status = !todos[index].status
+  // rerender data from localstorage
+  reRenderTodoList()
+}
+
+function reRenderTodoList() {
+  // delete every first element in UL element
+  while (todoList.firstElementChild) {
+    todoList.removeChild(todoList.firstChild)
+  }
+
+  // rerender todo from localstorage this will trigger only if status was click
+  renderTodoFromStorage()
+
+  const htmlTagList = Array.from(todoList.children)
+  htmlTagList.forEach((li) => {
+    li.classList.remove('bounceIn')
+  })
+
+  // update status to false or true everytime todostatus function execute
+  localStorage.setItem('todos', JSON.stringify(todos))
 }
 
 function initEdit(event) {
