@@ -22,14 +22,18 @@ function submitTodos(e) {
   e.preventDefault()
   const item = todoInput.value
 
-  const todo = {
-    id: crypto.randomUUID(),
-    item,
-    status: false,
+  if (!item) {
+    uiRenderMessage('Please add your todo list', 'alert alert-danger')
+    return
+  } else {
+    const todo = {
+      id: crypto.randomUUID(),
+      item,
+      status: false,
+    }
+    todos.push(todo)
+    uiRenderTodos()
   }
-  todos.push(todo)
-
-  uiRenderTodos()
 
   this.reset()
 }
