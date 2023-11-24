@@ -19,7 +19,7 @@ function eventListener() {
   // todo form submit
   todoForm.addEventListener('submit', submitTodos)
 
-  // events for status, edit, update
+  // events for todo delete, edit, status done or undone
   todoList.addEventListener('click', listOptions)
 }
 
@@ -85,13 +85,68 @@ function uiRenderMessage(msg, className) {
 }
 
 function listOptions(event) {
+  // delete Event
   deleteTodo(event)
+  // edit event
+  initEdit(event)
+}
+
+function initEdit(event) {
+  const editBtn = event.target.closest('#edit')
+
+  if (!editBtn) return
+  const htmlTagLi = event.target.closest('li')
+
+  // const formEdit = htmlTagLi.querySelector('form')
+  const editInput = htmlTagLi.querySelector('input')
+  const startAtEnd = editInput.value.length
+
+  // temporarily deleting options
+  editBtn.parentElement.classList.remove('options')
+  editBtn.parentElement.classList.add('none')
+
+  if (editInput.hasAttribute('readonly')) {
+    // remove readonly state
+    editInput.removeAttribute('readonly')
+
+    // put the cursor to the end of the text
+    editInput.setSelectionRange(startAtEnd, startAtEnd)
+
+    editInput.focus()
+    editInput.style.color = '#fca1a1'
+  }
+  // function for actual edit
+  editAction(htmlTagLi, editInput)
+}
+
+function editAction(el, input) {
+  const forms = todoList.querySelectorAll('form')
+
+  forms.forEach((form) => {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault()
+      // bring back the status,edit and delete button
+      const options = el.querySelector('.none')
+      options.classList.remove('none')
+      options.classList.add('options')
+
+      // bring back the input to the default state readonly
+      input.setAttribute('readonly', '')
+      input.style.color = 'white'
+
+      // execute the actual edit to the specific item
+      const id = el.dataset.id
+      const idx = todos.findIndex((todo) => todo.id === id)
+      todos[idx].item = input.value
+      localStorage.setItem('todos', JSON.stringify(todos))
+    })
+  })
 }
 
 function deleteTodo(event) {
-  const trashId = event.target.closest('#trash')
+  const trashBtn = event.target.closest('#trash')
 
-  if (!trashId) return
+  if (!trashBtn) return
 
   const htmlTagLi = event.target.closest('li')
 
