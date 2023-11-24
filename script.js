@@ -18,6 +18,9 @@ function eventListener() {
 
   // todo form submit
   todoForm.addEventListener('submit', submitTodos)
+
+  // events for status, edit, update
+  todoList.addEventListener('click', listOptions)
 }
 
 function submitTodos(e) {
@@ -50,7 +53,7 @@ function submitTodos(e) {
 
 function uiRenderTodos(todo) {
   const htmlTagLi = document.createElement('li')
-
+  htmlTagLi.setAttribute('data-id', todo.id)
   htmlTagLi.classList.add('bounceIn')
 
   htmlTagLi.innerHTML = `
@@ -78,6 +81,34 @@ function uiRenderMessage(msg, className) {
 
   setTimeout(() => {
     spanEl.remove()
+  }, 1000)
+}
+
+function listOptions(event) {
+  deleteTodo(event)
+}
+
+function deleteTodo(event) {
+  const trashId = event.target.closest('#trash')
+
+  if (!trashId) return
+
+  const htmlTagLi = event.target.closest('li')
+
+  htmlTagLi.classList.remove('bounceIn')
+  htmlTagLi.classList.add('bounceOutDown')
+
+  const id = htmlTagLi.dataset.id
+
+  todos = todos.filter((todo) => todo.id !== id)
+
+  localStorage.setItem('todos', JSON.stringify(todos))
+
+  setTimeout(() => {
+    htmlTagLi.remove()
+    if (todos.length === 0) {
+      todoList.innerHTML = '<p class="empty_message">Todos will go here</p>'
+    }
   }, 1000)
 }
 
