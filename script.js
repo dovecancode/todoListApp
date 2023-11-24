@@ -5,8 +5,7 @@ getTheCurrentGate()
 const todoForm = document.getElementById('form')
 const todoInput = document.getElementById('todoInput')
 const todoList = document.querySelector('.todo__list')
-
-console.log(todoList)
+let todaysDate = document.getElementById('todaysDate')
 
 const fragment = document.createDocumentFragment()
 
@@ -23,12 +22,23 @@ function submitTodos(e) {
   e.preventDefault()
   const item = todoInput.value
 
+  const todo = {
+    id: crypto.randomUUID(),
+    item,
+    status: false,
+  }
+  todos.push(todo)
+
+  uiRenderTodos()
+
   this.reset()
 }
 
 uiRenderTodos()
 function uiRenderTodos() {
   const htmlTagLi = document.createElement('li')
+
+  htmlTagLi.classList.add('bounceIn')
 
   todos.forEach((todo) => {
     htmlTagLi.innerHTML = `<div class="list">
@@ -45,4 +55,16 @@ function uiRenderTodos() {
 
   fragment.appendChild(htmlTagLi)
   todoList.appendChild(fragment)
+}
+
+function uiRenderMessage(msg, className) {
+  const spanEl = document.createElement('span')
+  spanEl.textContent = msg
+  spanEl.classList = className
+
+  todaysDate.insertAdjacentElement('afterend', spanEl)
+
+  setTimeout(() => {
+    spanEl.remove()
+  }, 1000)
 }
