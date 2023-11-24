@@ -37,8 +37,12 @@ function submitTodos(e) {
 
     uiRenderMessage('Todo added', 'alert alert-success')
 
-    localStorage.setItem('todos', JSON.stringify(todos))
+    if (todos.length === 1) {
+      todoList.innerHTML = ''
+    }
+
     uiRenderTodos(todo)
+    localStorage.setItem('todos', JSON.stringify(todos))
   }
 
   this.reset()
